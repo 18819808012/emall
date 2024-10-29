@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    
+    <title>jQuery网页特效最全网页模板和网站模板jQuery代码_17素材网</title>
+    <meta name="keywords" content="jQuery特效,网站模板,商城模板,网页特效">
+<meta name="description" content="17素材网主要收集jQuery网页特效、jQuery网页代码、网站模板、网页模板、企业模板、商城模板、图标等素材，为html网站模板开发人员提供高效率的工作方式。">
+<link href="//at.alicdn.com/t/font_220513_0tolm9ic87hq.css" rel="stylesheet">
+<link href="https://www.17sucai.com/statics/css/style.css" rel="stylesheet">
+<link href="https://www.17sucai.com/statics/css/detail.css" rel="stylesheet">
+<script src="/statics/js/jquery-1.11.0.js"></script><script src="/statics/js/member.js"></script>
+<script src="/statics/js/jquery.SuperSlide.2.1.3.js"></script>        <link type="image/png" href="/statics/images/favicon.ico" rel="shortcut icon">    <link href="https://www.17sucai.com/statics/layui/css/layui.css" rel="stylesheet">
+    <script src="https://www.17sucai.com/statics/layui/layui.js"></script>
+    <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    <script>
+        new LingQue.Monitor().init({id:"Jhke8qVgyz7SygtA"});
+    </script>
+</head>
+<body>
+
+
+<div class="top_bar">
+
+    <div class="main clear">
+
+        <div class="slogan fl">
+            <span>按 <label>Ctrl</label>+ <label>D</label>&nbsp;收藏我们</span>
+        </div>
+
+        <!--隐藏，滚动显示-->
+        <div class="f-logo fl">
+            <a href="https://www.17sucai.com/"><img src="https://www.17sucai.com/statics/images/fixed_logo.png" width="100" height="30" alt="网页模块 轻松建站-17素材网" /></a>
+        </div>
+
+        <div class="hidden_top search clear">
+            <div class="main">
+                <form action="/search" id="search-float-form" class="form" method="GET">
+                <input type="text" autocomplete="off" id="search-float-keywords" placeholder="43584 张 / 昨日更新10张" />
+                <!--搜索按钮-->
+                <div class="btn">
+                    <a href="javascript:void(0);return false;" id="searchFloatBtn"><i class="iconfont icon-sousuo"></i>&nbsp;搜索</a>
+                </div>
+                </form>
+            </div>
+        </div>
+        <!--隐藏，滚动显示结束-->
+        <div class="login fr" id="member">
+    <!--未登陆-->
+            <ul class="login_out clear" >
+            <li class="login">
+                <a class="lg-layer" href="javascript:;">登录</a>
+            </li>
+            <li class="regist">
+                <a class="reg-layer" href="javascript:;">注册</a>
+            </li>
+            <li class="qq">
+                <a class="qqlogin tran" href="https://www.17sucai.com/site/auth?authclient=qq&amp;return_url=https%3A%2F%2Fwww.17sucai.com%2Findex.php" rel="nofollow"><i class="icon iconfont">&#xe68e;</i>QQ登录</a>            </li>
+            <li class="weixin">
+                <a class="qqlogin tran" href="https://www.17sucai.com/" rel="nofollow" onclick="showQrBox();return false;"><i class="icon iconfont">&#xe6b7;</i>微信登录</a>            </li> 
+        </ul>
+    </div>
+<style>
+    .qr_mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0,0,0,.5);
+        z-index: 99999;
+    }
+    .wx_qr_box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 400px;
+        height: 400px;
+        background-color: #3c3a3a;
+        border-radius: 20px;
+    }
+    .wx_qr_box img {
+        display: block;
+        width: 80%;
+        height: 80%;
+        margin: 10% auto;
+    }
+    .wx_qr_box .close_qr_box {
+        position: absolute;
+        top:  -20px;
+        right: -20px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 36px;
+        line-height: 36px;
+        text-align: center;
+        color: #3c3a3a;
+        background-color: #fff;
+        border-radius: 50%;
+    }
+    .wx_qr_box .qr_title {
+        display: block;
+        position: absolute;
+        top:  10px;
+        right: 0;
+        width: 100%;
+        height: 32px;
+        font-size: 26px;
+        line-height: 26px;
+        text-align: center;
+        color: #fff;
+    }
+</style>
+<div class="qr_mask">
+    <div class="wx_qr_box">
+        <span class="qr_title">微信扫码登录</span>
+        <span class="close_qr_box" onclick="hideQrBox()">×</span>
+        <img src="/statics/images/loading2.gif" alt="">
+    </div>
+</div>
+<script>
+    var isLoginUrl = "/is_first/";
+    var sceneId = "",wxtimer = null;
+    function initQrInfo(){
+        var sucessFn = function(result){
+            result = JSON.parse(result);
+            if(result&&result.code===1){
+                var img = new Image();
+                img.src = result.qrcode;
+                img.onload = function(){
+                    $('.wx_qr_box img').attr('src',result.qrcode);
+                };
+                sceneId = result.scene_id;
+                
+            }
+            };
+        var errorFn = function(err){
+            console.error(err);
+        }
+        var data = $.ajax({
+            url:'/wxlogin?k='+Math.floor(Math.random()*10000000000),
+        });
+        data.then(sucessFn,errorFn);
+    }
+    function showQrBox(){
+        //隐藏注册框
+        $('#loginbox').hide();
+        $('#registerbox').hide();
+		$('.goodcover').hide();
+        var rand = Math.floor(Math.random()*10000000000);
+        $('.qr_mask').show();
+        timer = setInterval(function(){
+          var r = $.ajax({
+            url:'/is_first/'+ sceneId +'/'+rand,
+            });
+            r.then(function(e){
+            var res = JSON.parse(e);
+            if(!!(res.code*1)){
+                clearInterval(timer);
+                location.reload(true);
+            }
+        })
+        },2000);
+       
+    };
+    function hideQrBox(){
+        $('.qr_mask').hide();
+        clearInterval(timer);
+    }
+    $('.weixin').click(function () {
+        initQrInfo();
+    })
+</script>
+    </div>
+</div>
+
+<!--顶部导航轮播-->
+<div class="header">
+    <div class="header_bg">
+
+        <div class="main clear">
+            <div class="logo">
+               <h1>
+                <a href="https://www.17sucai.com/"><img src="https://www.17sucai.com/statics/images/logo.png" width="117" height="56" alt="网页模块 轻松建站-17素材网" /></a>
+               </h1>
+            </div>
+            
+<!--导航-->
+<div class="nav">
+    <ul>
+                            <li class="pnav ">
+                    <a href="https://www.17sucai.com/category/4" target="_blank">网页特效</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/32" target="_blank">图片代码</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/33" target="_blank">导航菜单</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/34" target="_blank">选项卡/滑动门</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/35" target="_blank">文字特效</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/36" target="_blank">表单代码</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/37" target="_blank">提示框/浮动层/弹出层</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/38" target="_blank">div css</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/39" target="_blank">其它特效</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/534.html" target="_blank">图片切换</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/7281.html" target="_blank">侧边导航</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/532.html" target="_blank">图片滚动</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/2347.html" target="_blank">图片轮播</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/359.html" target="_blank">插件</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/2771.html" target="_blank">三级联动</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                            <li class="pnav red">
+                    <a href="https://www.17sucai.com/category/5" target="_blank">flash素材</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/40" target="_blank">flash动画素材</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/41" target="_blank">flash banner/图片</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/42" target="_blank">flash导航菜单</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/62" target="_blank">flash模板素材</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/2751.html" target="_blank">源文件</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/333.html" target="_blank">3d</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/5629.html" target="_blank">源码</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/760.html" target="_blank">发光</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/531.html" target="_blank">焦点图</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/342.html" target="_blank">xml</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                            <li class="pnav cyan">
+                    <a href="https://www.17sucai.com/category/31" target="_blank">html5 css3</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/44" target="_blank">css3实例</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/45" target="_blank">html5实例</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/859.html" target="_blank">css3动画</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/6737.html" target="_blank">html5动画</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/16079.html" target="_blank">动画切换</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/418.html" target="_blank">html5 canvas</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/4020.html" target="_blank">手机</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/5291.html" target="_blank">html5导航菜单</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                            <li class="pnav yellow">
+                    <a href="https://www.17sucai.com/category/47" target="_blank">网页模板</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/53" target="_blank">企业网站</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/54" target="_blank">商城网站</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/56" target="_blank">个人网站</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/60" target="_blank">专题模板</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/63" target="_blank">后台模板</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/65" target="_blank">响应式模板</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/66" target="_blank">手机网站</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/67" target="_blank">单页模板</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/1219.html" target="_blank">黄色</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/1146.html" target="_blank">登录界面</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/1500.html" target="_blank">html</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/4147.html" target="_blank">静态</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/2823.html" target="_blank">个人博客</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/808.html" target="_blank">科技公司</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                            <li class="pnav purple">
+                    <a href="https://www.17sucai.com/category/48" target="_blank">网页素材</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/52" target="_blank">ui素材</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/57" target="_blank">图标素材</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/58" target="_blank">按钮素材</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/59" target="_blank">网页背景图片</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/6261.html" target="_blank">高清</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/562.html" target="_blank">网页背景</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/559.html" target="_blank">小图标</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/945.html" target="_blank">桌面图标</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/1961.html" target="_blank">ui设计</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/930.html" target="_blank">黑色背景</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                            <li class="pnav red">
+                    <a href="https://www.17sucai.com/category/88" target="_blank">整站源码</a>                    <!--导航下拉-->
+                    <div class="subnav">
+                        <div class="item clear">
+                            <div>分类</div>
+                            <ul>
+                                                                <li><a href="https://www.17sucai.com/category/89" target="_blank">织梦cms</a></li>
+                                                                <li><a href="https://www.17sucai.com/category/90" target="_blank">pbootcms模板</a></li>
+                                                            </ul>
+                        </div>
+                        <div class="item nav-tag clear">
+                            <div>标签</div>
+                            <ul>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/13327.html" target="_blank">科技</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/7676.html" target="_blank">互联网</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/1958.html" target="_blank">餐饮</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/7032.html" target="_blank">机械</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/5019.html" target="_blank">食品</a>                                    </li>
+                                                                    <li><a href="https://www.17sucai.com/pins/tag/3933.html" target="_blank">dedecms</a>                                    </li>
+                                                            </ul>
+                        </div>
+                    </div>
+                    <!--导航下拉结束-->
+                </li>
+                        <li class="pnav cyan">
+                <a href="https://www.17sucai.com/category/1" target="_blank">动画代码</a>            </li>
+            <li class="pnav cyan">
+             <a href="https://www.17sucai.com/category/2" target="_blank">样式设计</a>            </li>
+        <li class="pnav more">
+            <a>···</a>
+            <div class="subnav">
+                <div class="item clear">
+                    <ul>
+                       <!--  <li><a target="_blank" href="/category/1">代码</a></li>
+                        <li><a target="_blank" href="/category/2">设计</a></li> -->
+                        <li><a target="_blank" href="/pins/vip">VIP代码模块</a></li>
+                        <li><a target="_blank" href="/pins/gold">金币素材</a></li>
+                        <li><a target="_blank" href="/push-ranking.html">排行榜</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<!--导航结束-->
+        </div>
+        <!--搜索-->
+        <div class="search">
+            <form action="/search" id="search-form" class="form" method="GET">
+            <input type="text" autocomplete="off" id="seachkeywords" placeholder="共 43584 张 / 昨日更新10张" />
+            <div id="search-hot" class="recommend">
+                <ul>
+                    <li class="hot1"><span>1</span><em>app</em></li>
+                    <li class="hot2"><span>2</span><em>选项卡</em></li>
+                    <li class="hot3"><span>3</span><em>后台</em></li>
+                    <li><span>4</span><em>弹窗</em></li>
+                    <li><span>5</span><em>下拉菜单</em></li>
+                </ul>
+            </div>
+			<div id="search-kw" class="recommend"></div>
+            <!--搜索按钮-->
+            <div class="btn">
+                <a href="javascript:;" id="searchBtn"><i class="iconfont icon-sousuo"></i>&nbsp;搜索</a>
+            </div>
+            <!--热门关键词-->
+            <div class="hot">
+                <em>热门搜索：</em>
+                <ul class="active">
+                    <li><a target="_blank" href="https://www.17sucai.com/search/app">app</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E9%80%89%E9%A1%B9%E5%8D%A1">选项卡</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E5%BC%B9%E7%AA%97">弹窗</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95">下拉菜单</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E6%94%BE%E5%A4%A7%E9%95%9C">放大镜</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E5%9B%BE%E7%89%87%E8%BD%AE%E6%92%AD">图片轮播</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E5%90%8E%E5%8F%B0">后台</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E7%99%BB%E5%BD%95">登录</a></li>
+                    <li><a target="_blank" href="https://www.17sucai.com/search/%E6%B3%A8%E5%86%8C">注册</a></li>
+					<li><a target="_blank" href="https://www.17sucai.com/search/php">PHP</a></li>
+                </ul>
+            </div>
+            </form>
+        </div>
+        <!--搜索结束-->
+        <!--轮播开始-->
+        <div class="slider main">
+            <div id="slideBox" class="slideBox">
+                <div class="hd">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+						<li></li>
+						<li></li>
+                    </ul>
+                </div>
+                <div class="bd">
+                    <ul>
+                        <li><a target="_blank" href="/pay/vip?id=2"><img src="statics/images/vipbanner.png" width="1330" height="360" alt="vip年卡，底至6折" /></a></li>
+						<li><a target="_blank" href="/pay/vip"><img src="statics/images/slider2.png" width="1330" height="360" alt="vip尊享无限下载素材" /></a></li>
+                        <li><a target="_blank" href="/pay/jf-jb"><img src="statics/images/slider3.png" width="1330" height="360" alt="发布金币素材，无限获得金币提现" /></a></li>
+						<li><a target="_blank" href="/push-ranking.html"><img src="statics/images/slider1.png" width="1330" height="360" alt="排行榜" /></a></li>
+						<li><a target="_blank" href="/workers.html"><img src="statics/images/slider4.png" width="1330" height="360" alt="签约前端开发工程师" /></a></li>
+                    </ul>
+                </div>
+
+                <!-- 下面是前/后按钮代码，如果不需要删除即可 -->
+                <a class="prev" href="javascript:void(0)"></a>
+                <a class="next" href="javascript:void(0)"></a>
+            </div>
+        </div>
+        <!--轮播结束-->
+    </div>
+</div>
+<!--顶部导航轮播结束-->
+<!--热门推荐开始-->
+<!--热门推荐开始-->
+<div class="hot_recommend main">
+    <div class="list">
+                <ul>
+                        <li>
+
+                <a target="_blank" href="https://www.17sucai.com/category/4">
+                    <img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="动态文字泡泡字体设计图片免费制作生成器下载" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102993071.png?x-oss-process=style/lessen">                    <div class="mask">
+                        <i class="iconfont icon-texiao"></i>
+                        <p>网页特效</p>
+                    </div>
+                    <div class="mask-hover">网页特效</div>
+                </a>
+            </li>
+                        <li>
+
+                <a target="_blank" href="https://www.17sucai.com/category/31">
+                    <img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="立体阴影投影场景创意设计素材" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102949371.png?x-oss-process=style/lessen">                    <div class="mask">
+                        <i class="iconfont icon-html5"></i>
+                        <p>HTML5 CSS3</p>
+                    </div>
+                    <div class="mask-hover">HTML5 CSS3</div>
+                </a>
+            </li>
+                        <li>
+
+                <a target="_blank" href="https://www.17sucai.com/category/47">
+                    <img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1649" alt="摄影工作室单页网页源码模板必备" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102944342.png?x-oss-process=style/lessen">                    <div class="mask">
+                        <i class="iconfont icon-moban"></i>
+                        <p>网页模板</p>
+                    </div>
+                    <div class="mask-hover">网页模板</div>
+                </a>
+            </li>
+                        <li>
+
+                <a target="_blank" href="https://www.17sucai.com/category/66">
+                    <img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1652" alt="外卖配送移动端app界面框架设计模板" data-src="https://img.17sucai.com/attachment/3/2024-08-01/2024080125926.png?x-oss-process=style/lessen">                    <div class="mask">
+                        <i class="iconfont icon-shoujizhan"></i>
+                        <p>手机网站</p>
+                    </div>
+                    <div class="mask-hover">手机网站</div>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<!--热门推荐结束--><!--热门推荐结束-->
+
+<!--特效开始-->
+<div class="pins-box">
+    <div class="main">
+                                        <div class="effect block" id="mk1">
+            
+                       <h2>网页特效</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/4" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/4867.html" title="全屏滑动切换/网页特效" target="_blank">全屏滑动切换</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/6738.html" title="数据列表显示/网页特效" target="_blank">数据列表显示</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/2016.html" title="select搜索表单样式/网页特效" target="_blank">select搜索表单样式</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/266.html" title="浮动框/网页特效" target="_blank">浮动框</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/4096.html" title="选择框/网页特效" target="_blank">选择框</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/11722.html" title="切换标题/网页特效" target="_blank">切换标题</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/10201.html" title="分享插件/网页特效" target="_blank">分享插件</a>                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60893.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="动态文字泡泡字体设计图片免费制作生成器下载" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102993071.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60893.html" target="_blank">动态文字泡泡字体设计图片免费制作生成器下载</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60892.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="渐变邮箱表单html配色搭配模板" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102929397.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60892.html" target="_blank">渐变邮箱表单html配色搭配模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60889.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="南瓜下拉菜单栏html元素设计素材" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102986244.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60889.html" target="_blank">南瓜下拉菜单栏html元素设计素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60888.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="蓝色文字磨砂gsap动画效果实例" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102972585.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60888.html" target="_blank">蓝色文字磨砂gsap动画效果实例</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60887.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="紫色学术三角联想图形创意插图" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102843457.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60887.html" target="_blank">紫色学术三角联想图形创意插图</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60886.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="艺术循环文字擦除模型文字代码" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102852395.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60886.html" target="_blank">艺术循环文字擦除模型文字代码</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60882.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="梨子插画卡通梨图片素材" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102885710.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60882.html" target="_blank">梨子插画卡通梨图片素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60876.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="登陆会员登录页面表单设计html编码模板" data-src="https://img.17sucai.com/attachment/3/2024-10-26/2024102679420.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60876.html" target="_blank">登陆会员登录页面表单设计html编码模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                                <div class="flash block" id="mk2">
+                
+                       <h2>flash素材</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/5" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/9253.html" title="轨迹/flash素材" target="_blank">轨迹</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/11514.html" title="秋千/flash素材" target="_blank">秋千</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/9242.html" title="中秋月下/flash素材" target="_blank">中秋月下</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/9342.html" title="打鸣/flash素材" target="_blank">打鸣</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/9437.html" title="指针/flash素材" target="_blank">指针</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/9557.html" title="葡萄/flash素材" target="_blank">葡萄</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/11009.html" title="溜冰/flash素材" target="_blank">溜冰</a>                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/44667.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="207" alt="html会动的动画小熊，html动画元素" data-src="https://img.17sucai.com/attachment/3/2022-05-21/2022052117342.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/44667.html" target="_blank">html会动的动画小熊，html动画元素</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43867.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="207" alt="类似DNA细胞的css预加载动画" data-src="https://img.17sucai.com/attachment/3/2022-04-08/2022040879869.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43867.html" target="_blank">类似DNA细胞的css预加载动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43790.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="189" alt="Js+html5+css彩虹渐变斑点网页动画" data-src="https://img.17sucai.com/attachment/3/2022-04-01/2022040182017.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43790.html" target="_blank">Js+html5+css彩虹渐变斑点网页动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43587.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="202" alt="HTML5笔记本电脑打开关闭动画" data-src="https://img.17sucai.com/attachment/3/2022-03-22/2022032247248.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43587.html" target="_blank">HTML5笔记本电脑打开关闭动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43540.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="199" alt="逼真的html5 canvas下雨动画" data-src="https://img.17sucai.com/attachment/3/2022-03-19/2022031988039.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43540.html" target="_blank">逼真的html5 canvas下雨动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43397.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="196" alt="基于纯CSS3的发光光圈加载动画" data-src="https://img.17sucai.com/attachment/3/2022-03-13/2022031369958.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43397.html" target="_blank">基于纯CSS3的发光光圈加载动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43175.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="203" alt="3D线条旋转变换进度条动画特效" data-src="https://img.17sucai.com/attachment/3/2022-03-03/xiantiao.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43175.html" target="_blank">3D线条旋转变换进度条动画特效</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/43093.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="207" alt="纯css可调整大小的热狗网页动画" data-src="https://img.17sucai.com/attachment/3/2022-02-28/rg.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/43093.html" target="_blank">纯css可调整大小的热狗网页动画</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                                    <div class="h5css3 block" id="mk3">
+                    
+                       <h2>html5 css3</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/31" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/15725.html" title="css3 animati/html5 css3" target="_blank">css3 animati</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/12165.html" title="球体/html5 css3" target="_blank">球体</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/12352.html" title="h5小游戏/html5 css3" target="_blank">h5小游戏</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/12767.html" title="html5页面/html5 css3" target="_blank">html5页面</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/1531.html" title="全自动高/html5 css3" target="_blank">全自动高</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/15402.html" title="原生技术/html5 css3" target="_blank">原生技术</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/15538.html" title="html5 地图/html5 css3" target="_blank">html5 地图</a>                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60897.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="立体阴影投影场景创意设计素材" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102949371.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60897.html" target="_blank">立体阴影投影场景创意设计素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60895.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="全屏数字滑块拼图游戏拼图动画制作模板" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102979829.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60895.html" target="_blank">全屏数字滑块拼图游戏拼图动画制作模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60891.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="百态泡泡动画点击音效下载免费素材" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102924524.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60891.html" target="_blank">百态泡泡动画点击音效下载免费素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60890.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="南瓜种植生长3d模拟动态图模板" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102999841.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60890.html" target="_blank">南瓜种植生长3d模拟动态图模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60885.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="趣味猫咪svg线条流动效果动画动图" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102896277.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60885.html" target="_blank">趣味猫咪svg线条流动效果动画动图</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60884.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="方块骰子旋转陀螺模拟器下载" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102884089.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60884.html" target="_blank">方块骰子旋转陀螺模拟器下载</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60883.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="魔法换装快速换装表演游戏模板" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102882350.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60883.html" target="_blank">魔法换装快速换装表演游戏模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60881.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="渐变加载矩形圆柱体动画素材gif" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102820770.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60881.html" target="_blank">渐变加载矩形圆柱体动画素材gif</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                                        <div class="template block" id="mk4">
+                        
+                       <h2>网页模板</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/47" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/4355.html" title="静态html/网页模板" target="_blank">静态html</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/11863.html" title="自适应后台框架/网页模板" target="_blank">自适应后台框架</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/10882.html" title="登陆角色选择/网页模板" target="_blank">登陆角色选择</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/13379.html" title="古玩/网页模板" target="_blank">古玩</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/8584.html" title="app个人设置/网页模板" target="_blank">app个人设置</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/10329.html" title="用户中心/网页模板" target="_blank">用户中心</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/15722.html" title="全国电视台/网页模板" target="_blank">全国电视台</a>                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60896.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1649" alt="摄影工作室单页网页源码模板必备" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102944342.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60896.html" target="_blank">摄影工作室单页网页源码模板必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60894.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1582" alt="秋冬音乐会活动宣传网页设计模板" data-src="https://img.17sucai.com/attachment/3/2024-10-29/2024102984743.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60894.html" target="_blank">秋冬音乐会活动宣传网页设计模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60880.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="2342" alt="营销型商务公司网站建站模板" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102891711.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60880.html" target="_blank">营销型商务公司网站建站模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60879.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="2344" alt="家具定制网上商城单页网站模板必备" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102839061.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60879.html" target="_blank">家具定制网上商城单页网站模板必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60878.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="2114" alt="理财投资规划门户网站网页模板下载" data-src="https://img.17sucai.com/attachment/3/2024-10-28/2024102860221.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60878.html" target="_blank">理财投资规划门户网站网页模板下载</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60877.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="2271" alt="蓝色货币金融交易网站设计开发案例" data-src="https://img.17sucai.com/attachment/3/2024-10-26/2024102679404.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60877.html" target="_blank">蓝色货币金融交易网站设计开发案例</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60873.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="2640" alt="高奢酒店集团着陆页设计模板" data-src="https://img.17sucai.com/attachment/3/2024-10-26/2024102675390.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60873.html" target="_blank">高奢酒店集团着陆页设计模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60865.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1450" alt="艺术类作品集网站搭建设计模板" data-src="https://img.17sucai.com/attachment/3/2024-10-25/2024102517466.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60865.html" target="_blank">艺术类作品集网站搭建设计模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                                        <div class="template block" id="mk5">
+                        
+                       <h2>网页素材</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/48" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/7317.html" title="能源图标/网页素材" target="_blank">能源图标</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/706.html" title="漫画图标/网页素材" target="_blank">漫画图标</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/1936.html" title="金色系界面元素/网页素材" target="_blank">金色系界面元素</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/12814.html" title="人物图标/网页素材" target="_blank">人物图标</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/7392.html" title="花边/网页素材" target="_blank">花边</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/11258.html" title="设备图标/网页素材" target="_blank">设备图标</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/14135.html" title="白色爱心元素图标/网页素材" target="_blank">白色爱心元素图标</a>                                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60869.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="彩虹按钮边框点击效果css素材" data-src="https://img.17sucai.com/attachment/3/2024-10-26/2024102695621.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60869.html" target="_blank">彩虹按钮边框点击效果css素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60862.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="css图标字母图标logo设计代码必备" data-src="https://img.17sucai.com/attachment/3/2024-10-25/2024102563619.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60862.html" target="_blank">css图标字母图标logo设计代码必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60851.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="趣味动态万圣节图标设计" data-src="https://img.17sucai.com/attachment/3/2024-10-23/2024102390246.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60851.html" target="_blank">趣味动态万圣节图标设计</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60846.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="悬停图标按钮html按钮代码必备" data-src="https://img.17sucai.com/attachment/3/2024-10-23/2024102377519.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60846.html" target="_blank">悬停图标按钮html按钮代码必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60845.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="按钮边框css渐变边框素材下载" data-src="https://img.17sucai.com/attachment/3/2024-10-23/2024102374341.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60845.html" target="_blank">按钮边框css渐变边框素材下载</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60818.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="通话动态图标小图标可爱素材" data-src="https://img.17sucai.com/attachment/3/2024-10-19/2024101988527.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60818.html" target="_blank">通话动态图标小图标可爱素材</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60797.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="霓虹css小图标图标GIF代码大全下载" data-src="https://img.17sucai.com/attachment/3/2024-10-16/2024101682763.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60797.html" target="_blank">霓虹css小图标图标GIF代码大全下载</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/60788.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="454" alt="单选按钮css按钮选中效果必备" data-src="https://img.17sucai.com/attachment/3/2024-10-16/2024101638336.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/60788.html" target="_blank">单选按钮css按钮选中效果必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                                        <div class="template block" id="mk6">
+                        
+                       <h2>整站源码</h2>
+                        <span class="more-link"><a href="https://www.17sucai.com/category/88" rel="nofollow" target="_blank">更多<i class="iconfont icon-xiayiye"></i></a></span>
+
+                        
+                        <div class="category">
+                            <ul>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/15490.html" title="机械设备/整站源码" target="_blank">机械设备</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/14331.html" title="英文/整站源码" target="_blank">英文</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/6294.html" title="金属制品/整站源码" target="_blank">金属制品</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/14453.html" title="法律/整站源码" target="_blank">法律</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/8281.html" title="火锅/整站源码" target="_blank">火锅</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/14650.html" title="酒业/整站源码" target="_blank">酒业</a>                                    </li>
+                                                                                                        <li>
+                                    <a href="https://www.17sucai.com/pins/tag/7846.html" title="仪器/整站源码" target="_blank">仪器</a>                                    </li>
+                                
+                            </ul>
+                        </div>
+                        <div class="pins-list  clear ping-index-list">
+                            <ul>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57367.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="406" alt="网页模板设计pbootcms，水墨风白酒网站模板" data-src="https://img.17sucai.com/attachment/3/2023-11-11/2023111116805.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57367.html" target="_blank">网页模板设计pbootcms，水墨风白酒网站模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57328.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="495" alt="网页制作模板pbootcms，网络工作室网站源码必备" data-src="https://img.17sucai.com/attachment/3/2023-11-10/2023111010994.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57328.html" target="_blank">网页制作模板pbootcms，网络工作室网站源码必备</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57326.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="1005" alt="网页设计与制作代码pbootcms，门窗网站建设模板" data-src="https://img.17sucai.com/attachment/3/2023-11-10/2023111017626.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57326.html" target="_blank">网页设计与制作代码pbootcms，门窗网站建设模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57279.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="632" alt="网站源码pbootcms，门窗定制网页设计模板" data-src="https://img.17sucai.com/upload/2524208/2023-11-07/e4f07d965e475ec82ef0c9d5da3091f2.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57279.html" target="_blank">网站源码pbootcms，门窗定制网页设计模板</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57275.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="521" alt="html网页制作，家政公司网站模版pbootcms" data-src="https://img.17sucai.com/upload/2524208/2023-11-07/715a7bbf1c1f7eb505a15144347f595e.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57275.html" target="_blank">html网页制作，家政公司网站模版pbootcms</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57236.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="512" alt="html网页制作，办公家具网站模板pbootcms" data-src="https://img.17sucai.com/attachment/3/2023-11-06/2023110669738.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57236.html" target="_blank">html网页制作，办公家具网站模板pbootcms</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57214.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="517" alt="网页制作代码pbootcms，实用的花卉绿植网站制作" data-src="https://img.17sucai.com/attachment/3/2023-11-04/2023110427615.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57214.html" target="_blank">网页制作代码pbootcms，实用的花卉绿植网站制作</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                                                    <li>
+                                        <div class="pic">
+                                            <a href="https://www.17sucai.com/pins/57136.html" target="_blank"><img class="lazyload" src="/statics/images/lazypic.png" width="268" height="430" alt="网页设计代码必备，百科网页模板pbootcms" data-src="https://img.17sucai.com/attachment/3/2023-11-01/2023110194311.png?x-oss-process=style/lessen"></a>
+                                        </div>
+                                        <h3 class="title">
+                                            <a href="https://www.17sucai.com/pins/57136.html" target="_blank">网页设计代码必备，百科网页模板pbootcms</a>                                        </h3>
+                                        <div class="hover_show">
+                                                                                        <span class="soucang star">
+                                                            <i class="iconfont icon-collected "></i>
+                            </span>
+                                                            <a href="javascript:void(0);"  class="lg-layer">
+                                    源文件<i class="iconfont icon-download"></i>
+                                </a>
+                                                                    </div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                                    </div>
+            </div>
+            <!--列表结束-->
+
+
+    <script>
+        function pullMore(e) {
+            $(e).parent().find('li').show();
+            $(e).hide();
+        }
+    </script>
+
+
+<!--页尾11-->
+<div class="footer">
+    <div class="main">
+        <div class="tj clear">
+            <span>为你推荐<i class="iconfont icon-xiala"></i></span>
+            <a class="btn" target="_blank" href="https://www.17sucai.com/contact.html" rel="nofollow"><i class="iconfont icon--xiaoxi"></i>点我联系</a>
+            <div class="smalltb fr">
+                <!--<a class="weibo" href="https://weibo.com/"><i class="iconfont icon-weibo"></i></a>-->
+                <!--<a class="wx" href="javascript:;"><i class="iconfont icon-weixin"></i><img src="statics/images/qr.png" width="153" height="174" alt="二维码" /></a>-->
+            </div>
+        </div>
+        
+<div class="flink">
+    <div class="category">
+        <span class="t"><a href="/">友情链接</a></span>
+    </div>
+    <div class="list active">
+        <ul>
+                            <li>
+                    <a href="https://www.17sucai.com" target="_blank">jquery特效</a>                </li>
+                            <li>
+                    <a href="https://www.17sucai.com" target="_blank">网站模板</a>                </li>
+                            <li>
+                    <a href="https://www.17sucai.com" target="_blank">网页模板</a>                </li>
+                            <li>
+                    <a href="https://www.yasuotu.com/" target="_blank">图片压缩</a>                </li>
+                            <li>
+                    <a href="https://www.16pic.com/" target="_blank">六图网</a>                </li>
+                            <li>
+                    <a href="http://www.xinnet.com/" target="_blank">网站建设</a>                </li>
+                            <li>
+                    <a href="https://www.yibaixun.com/" target="_blank">网站设计</a>                </li>
+                            <li>
+                    <a href="https://www.feifeixitong.com" target="_blank">电脑系统下载</a>                </li>
+                            <li>
+                    <a href="https://www.17font.com/" target="_blank">字体视界</a>                </li>
+                            <li>
+                    <a href="http://www.apppark.cn/" target="_blank">app开发</a>                </li>
+                            <li>
+                    <a href="https://www.zwcad.com/" target="_blank">CAD</a>                </li>
+                            <li>
+                    <a href="https://www.eduego.com/" target="_blank">在职研究生</a>                </li>
+                            <li>
+                    <a href="https://tuzhizhijia.com/" target="_blank">自建房设计</a>                </li>
+                    </ul>
+    </div>
+
+
+</div>
+
+
+
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class=""><a href="/tags/group_A_B_C_1.html" target="_blank">A-C</a></li>
+        <li class=""><a href="/tags/group_D_E_F_1.html" target="_blank">D-F</a></li>
+        <li class=""><a href="/tags/group_G_H_I_1.html" target="_blank">G-I</a></li>
+        <li class=""><a href="/tags/group_J_K_L_1.html" target="_blank">J-L</a></li>
+        <li class=""><a href="/tags/group_M_N_O_1.html" target="_blank">M-O</a></li>
+        <li class=""><a href="/tags/group_P_Q_R_1.html" target="_blank">P-R</a></li>
+        <li class=""><a href="/tags/group_S_T_U_1.html" target="_blank">S-U</a></li>
+        <li class=""><a href="/tags/group_V_W_X_1.html" target="_blank">V-X</a></li>
+        <li class=""><a href="/tags/group_Y_Z_0_1.html" target="_blank">Y-Z</a></li>
+    </ul>
+    <div class="layui-tab-content tags">
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12839.html" target="_blank">jq图片裁剪</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12864.html" target="_blank">js运动</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12876.html" target="_blank">社交网站</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12888.html" target="_blank">下拉样式美化</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12889.html" target="_blank">下拉特效</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12928.html" target="_blank">移动端开关</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15105.html" target="_blank">淘宝首页轮播</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15106.html" target="_blank">3d轮播</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15110.html" target="_blank">jquery图片无缝轮播</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15134.html" target="_blank">全屏轮播图</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15162.html" target="_blank">旋转特效</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16461.html" target="_blank">表格响应式</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16462.html" target="_blank">表格动态</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16537.html" target="_blank">属性</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16541.html" target="_blank">变换</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16542.html" target="_blank">层叠</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16492.html" target="_blank">变色效果</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16511.html" target="_blank">网站定制</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16513.html" target="_blank">交互设计</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16516.html" target="_blank">网页开发</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16517.html" target="_blank">前端框架</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16436.html" target="_blank">网页搜索</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16437.html" target="_blank">网页浏览</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16438.html" target="_blank">网页登录</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/16439.html" target="_blank">网页注册</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12628.html" target="_blank">整站数据</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15124.html" target="_blank">创意礼物</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15592.html" target="_blank">整站全套页面</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/14085.html" target="_blank">网站，企业网站</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/4868.html" target="_blank">全屏滑动</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/9409.html" target="_blank">滚动图</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12477.html" target="_blank">郁金香</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/11053.html" target="_blank">园艺图标</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/9014.html" target="_blank">十一回家banner设计</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/13777.html" target="_blank">员工</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/5327.html" target="_blank">鼠标滑过</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/4907.html" target="_blank">宽屏焦点图</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/2505.html" target="_blank">客服</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/1180.html" target="_blank">环绕的绚烂彩带</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/14013.html" target="_blank">产品推介</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/15134.html" target="_blank">全屏轮播图</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12942.html" target="_blank">资讯网站</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/7952.html" target="_blank">导航切换</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/8386.html" target="_blank">mp4</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12530.html" target="_blank">秋天</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/9153.html" target="_blank">手拿卡</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/6258.html" target="_blank">扁平化按钮</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/5780.html" target="_blank">微信游戏</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/13881.html" target="_blank">年终报告</a>        </span>
+                <span class="layui-badge-rim">
+
+            <a href="https://www.17sucai.com/pins/tag/12362.html" target="_blank">香甜</a>        </span>
+        
+
+    </div>
+</div>
+<style>
+
+</style>
+
+<!--页尾222-->
+<div class="copyright clear">
+    <p>17素材网 © 2022 https://www.17sucai.com 版权所有 | <a rel="nofollow" target="_blank" href="https://beian.miit.gov.cn/">粤ICP备20006823号</a>
+    </p>
+    <ul>
+        <li>
+            <a target="_blank" href="/about.html" rel="nofollow">关于我们</a>
+        </li>
+        <li>
+            <a target="_blank" href="/pay/jf-jb" rel="nofollow">积分获取</a>
+        </li>
+        <li>
+            <a target="_blank" href="/rule.html" rel="nofollow">用户协议</a>
+        </li>
+        <li>
+            <a target="_blank" href="/pins/tagall.html">标签搜索</a>
+        </li>
+        <li>
+            <a target="_blank" href="/sitemap.html">网站地图</a>
+        </li>
+    </ul>
+    <div class="footer_logo">
+        <a href="/"><img src="/statics/images/footer_logo.png" width="126" height="38"/></a>
+    </div>
+</div>
+
+    </div>
+</div>
+<script>
+!(function(c,b,d,a){c[a]||(c[a]={});c[a].config=
+  {
+    pid:"e7ximn1y18@fa19e54698c5ffe",
+    appType:"web",
+    imgUrl:"https://arms-retcode.aliyuncs.com/r.png?",
+    sendResource:true,
+    enableLinkTrace:true,
+    behavior:true
+  };
+with(b)with(body)with(insertBefore(createElement("script"),firstChild))setAttribute("crossorigin","",src=d)
+})(window,document,"https://www.17sucai.com/statics/js/bl.js","__bl");
+</script>
+<!--页尾结束-->
+<!--签到-->
+<div id="sign">
+    <div class="sign-bg"></div>
+    <div class="sign-m">
+        <h2 class="title f30">签到成功!</h2>
+        <p class="sign-prompt">已连续签到<span>1</span>天，连续签到3天可获得50积分</p>
+        <a href="javascript:;" class="but">知道了</a>
+    </div>
+</div>
+<!--签到-->
+<!--登录框开始-->
+<div class="goodcover"></div>
+
+<div class="layerbox" id="loginbox">
+
+    <span class="switch-close">×</span>
+
+    <div id="otherway">
+
+        <div class="login-publicTitle">
+            <img src="/statics/images/fixed_logo.png" width="100" height="30" alt="">        </div>
+
+        <div class="login-publicTitle2">
+            <div class="linebg"></div>
+            <p>登录</p>
+        </div>
+
+        <div class="select-loginType clear">
+
+            <a class="qq left" href="https://www.17sucai.com/site/auth?authclient=qq&return_url=https%3A%2F%2Fwww.17sucai.com%2Findex.php">
+                <i class="iconfont icon-QQ"></i>
+                <span>QQ登录</span>
+                <span style="display: block;font-size: 14px;margin-top: 4px;">立即下载</span>
+            </a>
+
+            <a class="weixin left" href="javascript:void(0);" >
+                <i class="iconfont icon-weixin"></i>
+                <span>微信登录</span>
+                <span style="display: block;font-size: 14px;margin-top: 4px;">立即下载</span>
+            </a>
+        </div>
+
+        <div class="login-emil clear">
+            <span class="ps-info left">ps：不建议使用邮箱账号登录，请使用qq或微信登录。</span>
+            <a href="javascript:;" id="znlogin" class="btnemil right"><i class="iconfont icon-yonghu"></i>邮箱登录</a>
+        </div>
+
+    </div>
+
+    <div id="zhannei" style="display:none;">
+        <div class="login-publicTitle">
+            <img src="/statics/images/fixed_logo.png"  width="100" height="30" alt="网页模块 轻松建站-17素材网">
+        </div>
+        <div class="login-publicTitle2">
+            <div class="linebg"></div>
+            <p>使用邮箱登录17素材</p>
+        </div>
+        <div class="local-loginWay">
+            <form id="w0" action="https://www.17sucai.com/site/login" method="post">            <div class="form-group field-loginform-account required">
+
+<input type="text" id="loginform-account" class="email form-control" name="LoginForm[account]" aria-required="true">
+
+<div class="help-block"></div>
+</div>            <div class="form-group field-loginform-password required">
+
+<input type="password" id="loginform-password" class="pwd form-control" name="LoginForm[password]" aria-required="true">
+
+<div class="help-block"></div>
+</div>            <input type="submit" class="submit subtn" value="登录">            </form>        </div>
+        <span class="bkswitch"><a href="javascript:void(0);" id="threelogin"> << 返回第三方帐号登录 </a></span>
+    </div>
+
+</div>
+<!--登录框结束-->
+
+
+<!--注册框开始-->
+<div class="layerbox" id="registerbox">
+
+    <span class="switch-close">×</span>
+
+    <div class="login-publicTitle"><img src="/statics/i/logo-login.png" width="166" height="50"></div>
+
+    <div class="login-publicTitle2">
+        <div class="linebg"></div>
+        <p>注册</p>
+    </div>
+
+    <div class="select-loginType clear">
+        <a class="qq left" href="https://www.17sucai.com/site/auth?authclient=qq">
+            <i class="iconfont icon-QQ"></i>
+            <span>QQ注册</span>
+            <span style="display: block;font-size: 14px;margin-top: 4px;">立即下载</span>
+        </a>
+
+        <a class="weixin left" href="javascript:void(0);" >
+            <i class="iconfont icon-weixin"></i>
+            <span>微信注册</span>
+            <span style="display: block;font-size: 14px;margin-top: 4px;">立即下载</span>
+        </a>
+    </div>
+
+</div>
+
+<!--注册框结束-->
+<script>
+    $('.weixin').click(function () {
+        initQrInfo();
+        showQrBox();
+    })
+</script><!--左侧滚动楼层边栏开始-->
+<div class="left-float-bar" id="left-navBar">
+    <ul>
+        <li><a data-mao="#mk1"><span class="middle-box"><i class="iconfont icon-texiao"></i><span>网页特效</span></span></a></li>
+        <li><a data-mao="#mk2" ><span class="middle-box"><i class="iconfont icon-html5"></i><span>FLASH</span></span></a></li>
+        <li><a data-mao="#mk3" ><span class="middle-box"><i class="iconfont icon-diannao"></i><span>H5 CSS3</span></span></a></li>
+        <li><a data-mao="#mk4" ><span class="middle-box"><i class="iconfont icon-moban"></i><span>网页模板</span></span></a></li>
+        <li><a data-mao="#mk5" ><span class="middle-box"><i class="iconfont icon-picture"></i><span>网页素材</span></span></a></li>
+        <li><a data-mao="#mk6"><span class="middle-box"><i class="iconfont icon-xinxiliebiao"></i><span>整站源码</span></span></a></li>
+        <li><a href="javascript:;" class="return-top"><span class="middle-box"><i class="iconfont icon-shangchuan"></i><span>TOP</span></span></a></li>
+    </ul>
+</div>
+<!--左侧滚动楼层边栏结束-->
+<!--右侧固定边栏开始-->
+<div class="right-float-bar">
+    <ul class="sb-top">
+        <li class="sv-allVip">
+					<a href="javascript:void(0);" class="lg-layer"><span class="allvip-icon-gif"></span> 开通<br>VIP</a>
+				</li>	
+		<!-- 签到 -->
+				<li class="sign-in"><a href="javascript:void(0);" class="lg-layer"><i class="iconfont icon-qiandao"></i>签到</a></li>
+		    </ul>
+
+    <ul class="sb-bottom">
+        <li class="phone udesk-btn">
+            <a href="javascript:void(0);" rel="nofollow"><i class="iconfont icon-zixun"></i>客服</a>
+            <div class="introduce">
+                <p class="service-title">客服电话</p>
+                <div class="service-info">
+                    <p>
+						<a class="kefu-call-btn kefu-call-border" href="https://www.17sucai.com/contact.html" target="_blank" rel="nofollow"><em class="kefu-icon"></em><span class="callkf">点我联系</span></a>
+						</p>
+                    <p class="last-child">周一至周五：9：00 - 18：00</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul class="sb-floor">
+        <li class="return-top-r return-top" style="opacity: 1; display: list-item;"><i class="iconfont icon-huidingbu"></i></li>
+    </ul>
+</div>
+<!--右侧固定边栏结束-->
+<script src="https://www.17sucai.com/statics/js/lazyload.js"></script>
+<script src="https://www.17sucai.com/statics/js/masonry.js"></script>
+<script src="https://www.17sucai.com/statics/js/jquery.flex-images.min.js"></script>
+<script src="https://www.17sucai.com/statics/js/script.js"></script>
+<script src="/assets/daabfd1f/yii.js"></script>
+<script src="/assets/daabfd1f/yii.validation.js"></script>
+<script src="/assets/daabfd1f/yii.activeForm.js"></script>
+<script>//百度统计
+var _hmt = _hmt || [];
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?780bfd674747107457b04f9951920b24";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+
+</script>
+<script>jQuery(function ($) {
+jQuery('#w0').yiiActiveForm([{"id":"loginform-account","name":"account","container":".field-loginform-account","input":"#loginform-account","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"帐号不能为空。"});yii.validation.email(value, messages, {"pattern":/^[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/,"fullPattern":/^[^@]*<[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?>$/,"allowName":false,"message":"帐号不是有效的邮箱地址。","enableIDN":false,"skipOnEmpty":1});}},{"id":"loginform-password","name":"password","container":".field-loginform-password","input":"#loginform-password","validate":function (attribute, value, messages, deferred, $form) {yii.validation.required(value, messages, {"message":"密码不能为空。"});}}], []);
+});</script>
+</body>
+</html>
+
+
+
+
+
